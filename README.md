@@ -45,3 +45,10 @@ Confirm the images associated with your pods:
 ```
 kubectl get pods -n llm -o 'custom-columns=NAME:.metadata.name,READY:.status.containerStatuses[*].ready,STATUS:.status.phase,RESTARTS:.status.containerStatuses[*].restartCount,AGE:.metadata.creationTimestamp,IMAGE:.spec.containers[*].image'
 ```
+
+Open WebUI in some cases will want to try using advanced assistant features (such as web searching, code execution, or structured function calling) that require tool use/function calling capabilities. However, the model we default with (```qwen2:0.5b```) is a very small model that does not natively support or advertise tool-calling capabilities.
+<br/><br/>
+If we want full tool support in Open WebUI, switch to a larger model that natively supports function calling (such as llama3, mistral, or a larger variant of qwen2.5) by pulling it into Ollama:
+```
+kubectl exec -it deploy/llm-ollama-deployment -n llm -- ollama run qwen2.5:7b
+```
